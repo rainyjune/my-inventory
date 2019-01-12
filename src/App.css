@@ -1,5 +1,5 @@
-.App {
-  text-align: center;
+:root {
+  font-size: 1em;
 }
 
 .App-logo {
@@ -9,24 +9,63 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  text-align: center;;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-row {
+  margin-top: 0.625em;
+  margin-bottom: 0.625em;
+  padding-left: 1.25em;
+  padding-right: 1.25em;
+}
+
+.form-row label {
+  width: 6em;
+  text-align: right;
+  display: inline-block;
+}
+
+.form-row label + input {
+  margin-left: 0.5em;
+  display: inline-block;
+}
+
+.itemList,
+.itemList th,
+.itemList td {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: left;
+  table-layout: fixed;
+}
+
+.itemList th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.itemList tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.itemList tr:hover {
+  background-color: #f5f5f5;
+}
+
+.itemList th,
+.itemList td {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 20px;
+}
+
+.itemList td {
+  vertical-align: bottom;
 }
