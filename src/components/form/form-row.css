@@ -1,0 +1,26 @@
+.form-row {
+  margin-top: 0.625em;
+  margin-bottom: 0.625em;
+  padding-left: 1.25em;
+  padding-right: 1.25em;
+}
+
+.form-row label {
+  width: 6em;
+  text-align: right;
+  display: inline-block;
+}
+
+.form-row label + input {
+  margin-left: 0.5em;
+  display: inline-block;
+}
+
+.form-row button[type="submit"] {
+  width: 4rem;
+  margin-left: 2rem;
+}
+
+.form-row button[type="reset"] {
+  margin-left: .5rem;
+}

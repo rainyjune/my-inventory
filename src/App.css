@@ -18,54 +18,8 @@
   color: #61dafb;
 }
 
-.form-row {
-  margin-top: 0.625em;
-  margin-bottom: 0.625em;
-  padding-left: 1.25em;
-  padding-right: 1.25em;
-}
-
-.form-row label {
-  width: 6em;
-  text-align: right;
-  display: inline-block;
-}
-
-.form-row label + input {
-  margin-left: 0.5em;
-  display: inline-block;
-}
-
-.itemList,
-.itemList th,
-.itemList td {
-  width: 100%;
-  border: 1px solid black;
-  border-collapse: collapse;
-  text-align: left;
-  table-layout: fixed;
-}
-
-.itemList th {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.itemList tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.itemList tr:hover {
-  background-color: #f5f5f5;
-}
-
-.itemList th,
-.itemList td {
-  border: none;
-  border-bottom: 1px solid #ddd;
-  padding: 10px 20px;
-}
-
-.itemList td {
-  vertical-align: bottom;
+.tool-button {
+  font-size: 1rem;
+  margin: 0 1em;
+  padding: .5em 1em;
 }
