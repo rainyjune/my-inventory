@@ -10,7 +10,7 @@ export default class ItemList extends Component {
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>quantity</th>
+            <th>Quantity</th>
             <th>Price</th>
           </tr>
         </thead>

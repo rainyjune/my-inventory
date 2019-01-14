@@ -24,3 +24,7 @@
 .form-row button[type="reset"] {
   margin-left: .5rem;
 }
+
+.form-row button + button {
+  margin-left: .5rem;
+}

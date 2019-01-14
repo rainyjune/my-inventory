@@ -5,23 +5,30 @@ import ItemList from './components/itemList/index';
 
 class App extends Component {
   render() {
+    const tipsClassNames = ['tips'];
+    if (this.props.appError) {
+      tipsClassNames.push('show');
+    }
+    const editRemoveBtnDisabled = !this.props.selectedItem;
+    //debugger;
     return (
       <div className="App">
         <header className="App-header">
           My Inventory
         </header>
+        {this.props.formMode !== "NONE" &&
         <MyForm
           formMode={this.props.formMode}
           selectedItem={this.props.selectedItem}
           onSubmit={this.props.onFormSubmit}
-        />
-        {
-          this.props.items.length > 0 &&
-          <div>
-            <button className="tool-button" onClick={this.props.onEditBtnClick}>Edit</button>
-            <button className="tool-button" onClick={this.props.onRemoveBtnClick}>Remove</button>
-          </div>
-        }
+          onFormClose={this.props.onFormClose}
+        />}
+        <div className={tipsClassNames.join(' ')} onAnimationEnd={this.props.onTipsHide}>{this.props.appError}</div>
+        <div>
+          <button className="tool-button" onClick={this.props.onCreateBtnClick}>New</button>
+          <button disabled={editRemoveBtnDisabled} className="tool-button" onClick={this.props.onEditBtnClick}>Edit</button>
+          <button disabled={editRemoveBtnDisabled} className="tool-button" onClick={this.props.onRemoveBtnClick}>Remove</button>
+        </div>
         <ItemList
           selectedItem={this.props.selectedItem}
           items={this.props.items}

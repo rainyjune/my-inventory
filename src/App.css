@@ -19,7 +19,37 @@
 }
 
 .tool-button {
-  font-size: 1rem;
-  margin: 0 1em;
-  padding: .5em 1em;
+  margin: 0 .5em;
+}
+
+.tips {
+  background-color: yellow;
+  padding: 0 1.25em;
+  margin: 0.625em 0;
+  overflow: hidden;
+  height: 0;
+}
+
+.tips.show {
+  padding: .6em 1.25em;
+  height: 30px;
+  padding: 0 1.25em;
+  animation-name: example;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes example {
+  0% {
+    height: 0;
+    padding: 0em 1.25em;
+  }
+  50% {
+    height: 30px;
+    padding: .6em 1.25em;
+  }
+  100% {
+    height: 0;
+    padding: 0 1.25em;
+  }
 }

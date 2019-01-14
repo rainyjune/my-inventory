@@ -8,13 +8,20 @@ export function fetchItemList() {
         error => console.log('An error occurred.', error)
       )
       .then(json => {
-        dispatch({
-          type: 'GET_ITEMLIST',
-          items: json.data
-        });
-        dispatch({
-          type: 'UNSELECT_ITEM'
-        });
+        if (json.status === 'ok') {
+          dispatch({
+            type: 'GET_ITEMLIST',
+            items: json.data
+          });
+          dispatch({
+            type: 'UNSELECT_ITEM'
+          });
+        } else {
+          dispatch({
+            type: 'AJAX_ERROR',
+            msg: json.msg
+          });
+        }
       })
   };
 };

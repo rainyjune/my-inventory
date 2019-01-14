@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 
 export default class Form extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
-    //debugger;
-    //if (this.props.formMode !== prevProps.formMode || this.props.selectedItem !== )
     const isEditMode = this.props.formMode === 'EDIT' && this.props.selectedItem;
     const {id, name, quantity, price} = this.props.selectedItem || {};
 
@@ -35,6 +33,7 @@ export default class Form extends Component {
           <div className="form-row">
             <button type="submit" value="Submit">Submit</button>
             <button type="reset" value="Reset">Reset</button>
+            <button value="Close" onClick={this.props.onFormClose}>Close</button>
           </div>
         </form>
       </div>
