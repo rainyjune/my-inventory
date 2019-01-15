@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
-import { fetchItemList, saveNewItem, removeItem } from './actions';
+import { fetchItemList, saveNewItem, removeItem, setFormMode, clearAppError, unselectItem, selectItem, setAjaxError } from './actions';
 import reducer from './reducers/index';
 
 const render = () => {
@@ -17,23 +17,15 @@ const render = () => {
       selectedItem={state.selectedItem}
       items={state.items}
       onFormClose={() => {
-        store.dispatch({
-          type: 'SET_FORMMODE',
-          mode: 'NONE'
-        });
+        store.dispatch(setFormMode('NONE'));
       }}
       onTipsHide={() => {
-        store.dispatch({
-          type: 'CLEAR_APPERROR'
-        });
+        store.dispatch(clearAppError());
       }}
       onFormSubmit={(name, quantity, price, id) => {
         store.dispatch(saveNewItem(name, quantity, price, id)).then((json) => {
           if (json.status !== 'ok') {
-            store.dispatch({
-              type: 'AJAX_ERROR',
-              msg: json.msg
-            });
+            store.dispatch(setAjaxError(json.msg));
           } else {
             alert('Item saved successfully.');
             store.dispatch(fetchItemList());
@@ -41,10 +33,7 @@ const render = () => {
         });
       }}
       onCreateBtnClick={() => {
-        store.dispatch(store.dispatch({
-          type: 'SET_FORMMODE',
-          mode: 'CREATE'
-        }));
+        store.dispatch(setFormMode('CREATE'));
       }}
       onRemoveBtnClick={() => {
         const selectedItem= store.getState().selectedItem;
@@ -66,24 +55,15 @@ const render = () => {
           alert('Please select one item first.');
           return ;
         }
-        store.dispatch({
-          type: 'SET_FORMMODE',
-          mode: 'EDIT'
-        });
+        store.dispatch(setFormMode('EDIT'));
       }}
       onItemClick={(arg) => {
         const selectedItem = store.getState().selectedItem;
         if (selectedItem && selectedItem.id === arg.id) {
-          store.dispatch({
-            type: 'UNSELECT_ITEM'
-          });
+          store.dispatch(unselectItem());
         } else {
-          store.dispatch({
-            type: 'SELECT_ITEM',
-            item: Object.assign({}, arg)
-          });
+          store.dispatch(selectItem(Object.assign({}, arg)));
         }
-
       }}
     />,
     document.getElementById('root')
@@ -92,10 +72,9 @@ const render = () => {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducer, /* preloadedState, */ composeEnhancers(
-//const store = createStore(reducer,
-  applyMiddleware(
-    thunkMiddleware
-  )
+    applyMiddleware(
+      thunkMiddleware
+    )
 ));
 
 render();
