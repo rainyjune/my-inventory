@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import thunkMiddleware from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { fetchItemList, saveNewItem, removeItem } from './actions';
+import reducer from './reducers/index';
 
 const render = () => {
   const state = store.getState();
@@ -17,7 +18,8 @@ const render = () => {
       items={state.items}
       onFormClose={() => {
         store.dispatch({
-          type: 'FORM_DEFAULT_MODE'
+          type: 'SET_FORMMODE',
+          mode: 'NONE'
         });
       }}
       onTipsHide={() => {
@@ -39,9 +41,10 @@ const render = () => {
         });
       }}
       onCreateBtnClick={() => {
-        store.dispatch({
-          type: 'FORM_CREATE_MODE'
-        });
+        store.dispatch(store.dispatch({
+          type: 'SET_FORMMODE',
+          mode: 'CREATE'
+        }));
       }}
       onRemoveBtnClick={() => {
         const selectedItem= store.getState().selectedItem;
@@ -64,7 +67,8 @@ const render = () => {
           return ;
         }
         store.dispatch({
-          type: 'FORM_EDIT_MODE'
+          type: 'SET_FORMMODE',
+          mode: 'EDIT'
         });
       }}
       onItemClick={(arg) => {
@@ -84,51 +88,6 @@ const render = () => {
     />,
     document.getElementById('root')
   );
-};
-
-
-const reducer = (defaultState = {
-  items: [],
-  selectedItem: null,
-  formMode: 'NONE',
-  appError: ''
-}, action) => {
-  switch (action.type) {
-    case 'GET_ITEMLIST':
-      return Object.assign({}, defaultState, {
-        items: action.items
-      });
-    case 'SELECT_ITEM':
-      return Object.assign({}, defaultState, {
-        selectedItem: action.item
-      });
-    case 'UNSELECT_ITEM':
-      return Object.assign({}, defaultState, {
-        selectedItem: null
-      });
-    case 'FORM_EDIT_MODE':
-      return Object.assign({}, defaultState, {
-        formMode: 'EDIT'
-      });
-    case 'FORM_DEFAULT_MODE':
-      return Object.assign({}, defaultState, {
-        formMode: 'NONE'
-      });
-    case 'FORM_CREATE_MODE':
-      return Object.assign({}, defaultState, {
-        formMode: 'CREATE'
-      });
-    case 'AJAX_ERROR':
-      return Object.assign({}, defaultState, {
-        appError: action.msg
-      });
-    case 'CLEAR_APPERROR':
-      return Object.assign({}, defaultState, {
-        appError: ''
-      });
-    default:
-      return defaultState;
-  }
 };
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
