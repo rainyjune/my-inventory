@@ -1,7 +1,12 @@
 import React from 'react';
 
-const Item = ({ id, name, quantity, price, onClick, selectedItem} ) => (
-  <tr onClick={() => onClick({id, name, quantity, price})} style={{backgroundColor: selectedItem && selectedItem.id === id ? 'green' : ''}}>
+const Item = ({ id, name, quantity, price, onClick, isSelected }) => (
+  <tr
+    onClick={onClick}
+    style={{
+      backgroundColor: isSelected ? '#bdeabf' : ''
+    }}
+  >
     <td>{id}</td>
     <td>{name}</td>
     <td>{quantity}</td>

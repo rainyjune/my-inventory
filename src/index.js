@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
@@ -11,61 +12,63 @@ import reducer from './reducers/index';
 const render = () => {
   const state = store.getState();
   ReactDOM.render(
-    <App
-      appError={state.appError}
-      formMode={state.formMode}
-      selectedItem={state.selectedItem}
-      items={state.items}
-      onFormClose={() => {
-        store.dispatch(setFormMode('NONE'));
-      }}
-      onTipsHide={() => {
-        store.dispatch(clearAppError());
-      }}
-      onFormSubmit={(name, quantity, price, id) => {
-        store.dispatch(saveNewItem(name, quantity, price, id)).then((json) => {
-          if (json.status !== 'ok') {
-            store.dispatch(setAjaxError(json.msg));
-          } else {
-            alert('Item saved successfully.');
-            store.dispatch(fetchItemList());
+    <Provider store={store}>
+      <App
+        appError={state.appError}
+        formMode={state.formMode}
+        selectedItem={state.selectedItem}
+        items={state.items}
+        onFormClose={() => {
+          store.dispatch(setFormMode('NONE'));
+        }}
+        onTipsHide={() => {
+          store.dispatch(clearAppError());
+        }}
+        onFormSubmit={(name, quantity, price, id) => {
+          store.dispatch(saveNewItem(name, quantity, price, id)).then((json) => {
+            if (json.status !== 'ok') {
+              store.dispatch(setAjaxError(json.msg));
+            } else {
+              alert('Item saved successfully.');
+              store.dispatch(fetchItemList());
+            }
+          });
+        }}
+        onCreateBtnClick={() => {
+          store.dispatch(setFormMode('CREATE'));
+        }}
+        onRemoveBtnClick={() => {
+          const selectedItem= store.getState().selectedItem;
+          if (!selectedItem) {
+            alert('Please select one item first.');
+            return ;
           }
-        });
-      }}
-      onCreateBtnClick={() => {
-        store.dispatch(setFormMode('CREATE'));
-      }}
-      onRemoveBtnClick={() => {
-        const selectedItem= store.getState().selectedItem;
-        if (!selectedItem) {
-          alert('Please select one item first.');
-          return ;
-        }
-        if (window.confirm("Are you sure to continue?") === false) {
-          return ;
-        }
-        store.dispatch(removeItem(selectedItem.id)).then(() => {
-          alert('The item was removed successfully.');
-          store.dispatch(fetchItemList());
-        });
-      }}
-      onEditBtnClick={() => {
-        const selectedItem= store.getState().selectedItem;
-        if (!selectedItem) {
-          alert('Please select one item first.');
-          return ;
-        }
-        store.dispatch(setFormMode('EDIT'));
-      }}
-      onItemClick={(arg) => {
-        const selectedItem = store.getState().selectedItem;
-        if (selectedItem && selectedItem.id === arg.id) {
-          store.dispatch(unselectItem());
-        } else {
-          store.dispatch(selectItem(Object.assign({}, arg)));
-        }
-      }}
-    />,
+          if (window.confirm("Are you sure to continue?") === false) {
+            return ;
+          }
+          store.dispatch(removeItem(selectedItem.id)).then(() => {
+            alert('The item was removed successfully.');
+            store.dispatch(fetchItemList());
+          });
+        }}
+        onEditBtnClick={() => {
+          const selectedItem= store.getState().selectedItem;
+          if (!selectedItem) {
+            alert('Please select one item first.');
+            return ;
+          }
+          store.dispatch(setFormMode('EDIT'));
+        }}
+        onItemClick={(arg) => {
+          const selectedItem = store.getState().selectedItem;
+          if (selectedItem && selectedItem.id === arg.id) {
+            store.dispatch(unselectItem());
+          } else {
+            store.dispatch(selectItem(Object.assign({}, arg)));
+          }
+        }}
+      />
+    </Provider>,
     document.getElementById('root')
   );
 };

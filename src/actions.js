@@ -80,3 +80,14 @@ export function selectItem(item) {
 export function setAjaxError(msg) {
   return { type: 'AJAX_ERROR', msg };
 }
+
+export function toggleItemSelect(item) {
+  return function(dispatch, getState) {
+    const selectedItem = getState();
+    if (selectedItem && selectedItem.id === item.id) {
+      dispatch(unselectItem());
+    } else {
+      dispatch(selectItem(Object.assign({}, item)));
+    }
+  };
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import MyForm from './components/form/index';
-import ItemList from './components/itemList/index';
+import VisibleItemList from './components/VisibleItemList';
 
 class App extends Component {
   render() {
@@ -29,11 +29,7 @@ class App extends Component {
           <button disabled={editRemoveBtnDisabled} className="tool-button" onClick={this.props.onEditBtnClick}>Edit</button>
           <button disabled={editRemoveBtnDisabled} className="tool-button" onClick={this.props.onRemoveBtnClick}>Remove</button>
         </div>
-        <ItemList
-          selectedItem={this.props.selectedItem}
-          items={this.props.items}
-          onItemClick={ arg =>this.props.onItemClick(arg) }
-        />
+        <VisibleItemList />
       </div>
     );
   }
