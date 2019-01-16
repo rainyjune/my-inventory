@@ -1,42 +1,75 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import './form-row.css';
+import { saveNewItem, fetchItemList, setAjaxError, setFormMode, updateFormInput } from '../../actions';
 
-export default class Form extends Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const isEditMode = this.props.formMode === 'EDIT' && this.props.selectedItem;
-    const {id, name, quantity, price} = this.props.selectedItem || {};
+const mapStateToProps = state => {
+  return {
+    formMode: state.formMode,
+    selectedItem: state.formValues || {
+      id: '',
+      name: '',
+      quantity: '',
+      price: ''
+    }
+  };
+}
 
-    this.itemIDInput.value = isEditMode ? id: '';
-    this.itemNameInput.value = isEditMode ? name: '';
-    this.itemQuantityInput.value = isEditMode ? quantity: '';
-    this.itemPriceInput.value = isEditMode ? price: '';
-  }
-  render() {
-    return (
-      <div>
-        <form id="item-form" onSubmit={e => {
-          e.preventDefault();
-          this.props.onSubmit(this.itemNameInput.value, this.itemQuantityInput.value, this.itemPriceInput.value, this.itemIDInput.value);
-        }}>
-          <input ref={node => {this.itemIDInput = node}} type="hidden" id="itemId" />
-          <div className="form-row">
-            <label htmlFor="itemName">Name</label>
-            <input ref={node => {this.itemNameInput = node}} type="text" id="itemName" required />
-          </div>
-          <div className="form-row">
-            <label htmlFor="itemQuantity">Quantity</label>
-            <input ref={node => {this.itemQuantityInput = node}} type="number" id="itemQuantity" required />
-          </div>
-          <div className="form-row">
-            <label htmlFor="itemPrice">Price</label>
-            <input ref={node => {this.itemPriceInput = node}} type="number" id="itemPrice" step="any" required />
-          </div>
-          <div className="form-row">
-            <button type="submit" value="Submit">Submit</button>
-            <button type="reset" value="Reset">Reset</button>
-            <button value="Close" onClick={this.props.onFormClose}>Close</button>
-          </div>
-        </form>
-      </div>
-    );
+const mapDispatchToProps = dispatch => {
+  return {
+    onInputChange: e => {
+      dispatch(updateFormInput(e));
+    },
+    onSubmit: e => {
+      e.preventDefault();
+      dispatch(saveNewItem()).then((json) => {
+        if (json.status !== 'ok') {
+          dispatch(setAjaxError(json.msg));
+        } else {
+          alert('Item saved successfully.');
+          dispatch(fetchItemList());
+        }
+      });
+    },
+    onClose: e => {
+      e.preventDefault();
+      dispatch(setFormMode('NONE'));
+    }
   }
 }
+
+let Form = ({ formMode, selectedItem, onInputChange, onSubmit, onClose }) => {
+  const permittedMode = ['CREATE', 'EDIT'];
+  if (permittedMode.indexOf(formMode) === -1) return null;
+  return (
+    <div>
+      <form id="item-form" onSubmit={onSubmit}>
+        <input type="hidden" id="itemId" value={selectedItem.id} />
+        <div className="form-row">
+          <label htmlFor="itemName">Name</label>
+          <input name="name" type="text" required value={selectedItem.name} onChange={onInputChange} />
+        </div>
+        <div className="form-row">
+          <label htmlFor="itemQuantity">Quantity</label>
+          <input name="quantity" type="number"required value={selectedItem.quantity} onChange={onInputChange} />
+        </div>
+        <div className="form-row">
+          <label htmlFor="itemPrice">Price</label>
+          <input type="number" name="price" step="any" required value={selectedItem.price} onChange={onInputChange} />
+        </div>
+        <div className="form-row">
+          <button type="submit" value="Submit">Submit</button>
+          <button type="reset" value="Reset">Reset</button>
+          <button value="Close" onClick={onClose}>Close</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+Form = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Form);
+
+export default Form;
