@@ -4,7 +4,7 @@ import { setFormMode, clearFormItem, unselectItem, removeSelectedItem, fetchItem
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    active: ownProps.type !== 'CREATE' ? !!state.selectedItem : true
+    active: (ownProps.type !== 'CREATE' && ownProps.type !== 'REFRESH') ? !!state.selectedItem : true
   };
 };
 
@@ -24,6 +24,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           alert('The item was removed successfully.');
           dispatch(fetchItemList());
         });
+      } else if (ownProps.type === "REFRESH") {
+        dispatch(fetchItemList());
       }
     }
   }

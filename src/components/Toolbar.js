@@ -6,6 +6,7 @@ const Toolbar = () => (
     <ToolbarButton type="CREATE">New</ToolbarButton>
     <ToolbarButton type="EDIT">Edit</ToolbarButton>
     <ToolbarButton type="REMOVE">Remove</ToolbarButton>
+    <ToolbarButton type="REFRESH">Refresh</ToolbarButton>
   </div>
 );
 
