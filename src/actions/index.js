@@ -13,6 +13,7 @@ function status(response) {
 
 export function fetchItemList() {
   return function(dispatch) {
+    dispatch(setItemListLoading());
     return fetch(SERVER + 'list.php')
       .then(status)
       .then(
@@ -28,6 +29,9 @@ export function fetchItemList() {
       }, e => {
         dispatch(setAjaxError(e.message));
       })
+      .finally(() => {
+        dispatch(stopItemListLoading());
+      });
   };
 };
 
@@ -130,4 +134,16 @@ export function updateFormInput(e) {
     type: 'UPDATE_FORM_INPUT_' + target.name.toUpperCase(),
     value: target.value
   };
-}
+};
+
+export function setItemListLoading() {
+  return {
+    type: 'ITEM_LIST_LOADING'
+  };
+};
+
+export function stopItemListLoading() {
+  return {
+    type: 'ITEM_LIST_LOADED'
+  };
+};

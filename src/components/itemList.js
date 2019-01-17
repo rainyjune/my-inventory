@@ -2,8 +2,10 @@ import React from 'react';
 import './items.css';
 import Item from './item';
 import PropTypes from 'prop-types';
+import loadingImg from '../loading.svg';
 
-const ItemList = ({ items, onItemClick, selectedItem }) => (
+const ItemList = ({ items, itemsListLoading, onItemClick, selectedItem }) => (
+  <div style={{position: 'relative'}}>
   <table className="itemList">
     <thead>
       <tr>
@@ -30,6 +32,10 @@ const ItemList = ({ items, onItemClick, selectedItem }) => (
       }
     </tbody>
   </table>
+  <div className={"itemlist-loading" + (itemsListLoading ? ' show' : '')}>
+    <img src={loadingImg} className="spinner" alt="loading" />
+  </div>
+  </div>
 );
 
 const itemShape = PropTypes.shape({

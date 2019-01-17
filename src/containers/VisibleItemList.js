@@ -5,6 +5,7 @@ import ItemList from '../components/itemList';
 const mapStateToProps = state => {
   return {
     items: state.items,
+    itemsListLoading: state.itemsListLoading,
     selectedItem: state.selectedItem
   };
 };
