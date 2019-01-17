@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import Button from './Button';
-import { setFormMode, clearFormItem, unselectItem, removeSelectedItem, fetchItemList } from '../actions';
+import Button from '../components/Button';
+import { setFormMode, clearFormItem, unselectItem, removeSelectedItem, fetchItemList } from '../actions/index';
 
 const mapStateToProps = (state, ownProps) => {
   return {

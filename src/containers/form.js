@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './form-row.css';
-import { saveNewItem, fetchItemList, setAjaxError, setFormMode, updateFormInput } from '../../actions';
+import { saveNewItem, fetchItemList, setAjaxError, setFormMode, updateFormInput } from '../actions/index';
 
 const mapStateToProps = state => {
   return {

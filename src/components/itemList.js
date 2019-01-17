@@ -1,6 +1,7 @@
 import React from 'react';
 import './items.css';
-import Item from '../item/index';
+import Item from './item';
+import PropTypes from 'prop-types';
 
 const ItemList = ({ items, onItemClick, selectedItem }) => (
   <table className="itemList">
@@ -17,7 +18,7 @@ const ItemList = ({ items, onItemClick, selectedItem }) => (
         <Item
           key={item.id}
           {...item}
-          isSelected={selectedItem && selectedItem.id === item.id}
+          isSelected={!!(selectedItem && selectedItem.id === item.id)}
           onClick={() => onItemClick(item)}
         />
       ))}
@@ -30,5 +31,18 @@ const ItemList = ({ items, onItemClick, selectedItem }) => (
     </tbody>
   </table>
 );
+
+const itemShape = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  quantity: PropTypes.string.isRequired,
+  price: PropTypes.string.isRequired
+});
+
+ItemList.propTypes = {
+  items: PropTypes.arrayOf(itemShape.isRequired).isRequired,
+  selectedItem: itemShape,
+  onItemClick: PropTypes.func.isRequired
+};
 
 export default ItemList;

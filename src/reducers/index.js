@@ -5,5 +5,10 @@ import formMode from './formMode';
 import selectedItem from './selectedItem';
 import formValues from './formValues';
 
-const reducer = combineReducers({appError, items, formMode, selectedItem, formValues});
-export default reducer;
+export default combineReducers({
+  appError,
+  items,
+  formMode,
+  selectedItem,
+  formValues
+});

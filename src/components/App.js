@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import MyForm from './components/form/form';
-import VisibleItemList from './components/VisibleItemList';
-import Toolbar from './components/Toolbar';
-import Notification from './components/Notification';
+import MyForm from '../containers/form';
+import VisibleItemList from '../containers/VisibleItemList';
+import Toolbar from './Toolbar';
+import Notification from '../containers/Notification';
 
 const App = () => (
   <div className="App">

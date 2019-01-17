@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { clearAppError } from '../actions';
+import { clearAppError } from '../actions/index';
 
 const mapStateToProps = state => {
   return {

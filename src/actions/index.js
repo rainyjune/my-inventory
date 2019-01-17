@@ -1,5 +1,5 @@
 import fetch from 'cross-fetch';
-import Config from './config';
+import Config from '../config';
 
 const { SERVER } = Config;
 

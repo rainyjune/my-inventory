@@ -1,5 +1,5 @@
 import React from 'react';
-import ToolbarButton from './ToolbarButton';
+import ToolbarButton from '../containers/ToolbarButton';
 
 const Toolbar = () => (
   <div>
